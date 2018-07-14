@@ -42,7 +42,7 @@ int main()
 	cout << poly.size();
 	cout.precision(1);
 	for (decltype(poly.size()) i = 0; i < poly.size(); ++i)
-		printf(" %.0f %.1f", poly[i].exp, poly[i].coe);
+		printf(" %.0f %.1f", poly[i].exp, poly[i].coe);//然而，这样的输出格式是尝试出来的。。。
 	while (cin.get() != 0);
 	return 0;
 }
