@@ -1,29 +1,22 @@
 #include<iostream>
 #include<vector>
 #include<string>
-using namespace std;
 int main()
 {
-	string tt;
-	cin >> tt;
-	//求和
-	unsigned int sum=0;
-	for (unsigned int i = 0; i < tt.size(); ++i)
+	std::string input;
+	std::cin>>input;
+	int sum{0};
+	for (auto& X:input)
 	{
-		sum = sum + tt[i]-'0';
+		sum+=X-'0';
 	}
-	vector<int> shuchu;
-	vector<string> en = { "zero","one","two","three","four","five","six","seven","eight","nine" };
-	do
-		{
-			shuchu.push_back(sum % 10);
-			sum = sum / 10;
-	} while (sum != 0);
-		cout << en[shuchu[shuchu.size() - 1]];
-		for (int i = shuchu.size()-1; i > 0; --i)
-		{
-			cout<< " "<<en[shuchu[i - 1]];
+	std::vector<std::string> en = { "zero","one","two","three","four","five","six","seven","eight","nine" };
+	std::string sum_str = std::to_string(sum);
+	for(int i = 0;i<sum_str.size();++i) {
+		std::cout<<en.at(sum_str.at(i)-'0');
+		if(i!=sum_str.size()-1) {
+			std::cout<<" ";
 		}
-		system("pause");
-		return 0;
+	}
+	//不能输入 退格"\b"
 }
