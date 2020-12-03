@@ -1,49 +1,48 @@
 #include<iostream>
 #include<vector>
-using namespace std;
-int k1, k2;
-struct p
-{
-	float exp=0;
-	float coe=0;
+#include<algorithm>
+struct poly
+{	
+	int exp;
+	double coe;
+	bool operator<(const poly&other) {
+		return other.exp<this->exp;
+	}
 };
-int main()
-{
-	vector<p>  poly;
-	cin >> k1;
-	p v;
-	for (int i = 0; i < k1; ++i)
-	{
-		cin >> v.exp >> v.coe;
-		poly.push_back(v);
+int main() {
+	int l_1,l_2;
+	std::vector<poly> p_1,p_2;
+	std::cin>>l_1;
+	for(int i = 0;i<l_1;++i) {
+		poly p;
+		std::cin>>p.exp>>p.coe;
+		p_1.push_back(p);
 	}
-	cin >> k2;
-	for (int i = 0; i < k2; ++i)
-	{
-		cin >> v.exp >> v.coe;
-		poly.push_back(v);
+	std::cin>>l_2;
+	for(int j = 0;j<l_2;++j) {
+		poly p;
+		std::cin>>p.exp>>p.coe;
 	}
-	for (decltype(poly.size()) i = 0; i < poly.size(); ++i)
-	{
-		for (decltype(i) j = i + 1; j < poly.size(); ++j)
-		{
-			if (poly[i].exp < poly[j].exp)
-				swap(poly[i], poly[j]);
-			else if (poly[i].exp == poly[j].exp)
-			{
-				poly[i].coe += poly[j].coe;
-				poly.erase(poly.begin()+j);
-				if (poly[i].coe == 0)
-					poly.erase(poly.begin() + i);
+	for(auto& X:p_1) {
+		for(int ii = 0;ii<p_2.size();++ii) {
+			if(p_2.at(ii).exp==X.exp) {
+				X.coe += p_2.at(ii).coe;
+				p_2.erase(p_2.begin()+ii);
+				break;
 			}
 		}
 	}
-	cout << poly.size();
-	cout.precision(1);
-	for (decltype(poly.size()) i = 0; i < poly.size(); ++i)
-		printf(" %.0f %.1f", poly[i].exp, poly[i].coe);//然而，这样的输出格式是尝试出来的。。。
-	while (cin.get() != 0);
-	return 0;
+	for(auto& Y:p_2) {
+		p_1.push_back(std::move(Y));
+	}
+	std::sort(p_1.begin(),p_1.end());
+	std::cout<<p_1.size()+1<<" ";
+	for(int jj = 0;jj<p_1.size();jj++) {
+		std::cout<<p_1.at(jj).coe<<" "<<ios::setiosflags(std::ios::fixed)<<p_1.at(jj).exp;
+		if(jj!=p_1.size()-1) 
+			std::cout<<" ";
+	}
+	
 }
-		
+
 
