@@ -22,6 +22,7 @@ int main() {
 	for(int j = 0;j<l_2;++j) {
 		poly p;
 		std::cin>>p.exp>>p.coe;
+		p_2.push_back(p);
 	}
 	for(auto& X:p_1) {
 		for(int ii = 0;ii<p_2.size();++ii) {
@@ -35,12 +36,19 @@ int main() {
 	for(auto& Y:p_2) {
 		p_1.push_back(std::move(Y));
 	}
+	
 	std::sort(p_1.begin(),p_1.end());
-	std::cout<<p_1.size()+1<<" ";
+	for(int i_1 = 0;i_1<p_1.size();++i_1) {
+		if(p_1.at(i_1).coe == 0)
+		{	
+			p_1.erase(p_1.begin()+i_1);
+			i_1 = 0;
+		}
+			
+	}
+	std::cout<<p_1.size();
 	for(int jj = 0;jj<p_1.size();jj++) {
-		std::cout<<p_1.at(jj).coe<<" "<<ios::setiosflags(std::ios::fixed)<<p_1.at(jj).exp;
-		if(jj!=p_1.size()-1) 
-			std::cout<<" ";
+		printf(" %d %.1f", p_1.at(jj).exp, p_1.at(jj).coe);
 	}
 	
 }

@@ -1,67 +1,59 @@
 #include<iostream>
-using namespace std;
-int main()
-{
-	//读取输入。int k1,k2来分别表示两个polynomials中 nonzero terms 的项数，
-	//float a1[30],n1[20]分别表示两个polynomials的指数（exponets）和系数（coefficients)。
-	int k1, k2;
-	float a1[30],n1[20];
-	cin >> k1;
-	for (int i = 0; i<k1; ++i)
-	{
-		cin >> a1[i] >> n1[i];
+#include<vector>
+#include<algorithm>
+struct poly
+{	
+	int exp;
+	double coe;
+};
+int main() {
+	///接受输入
+	int l_1,l_2;
+	std::vector<poly> p_1,p_2;
+	std::cin>>l_1;
+	for(int i = 0;i<l_1;++i) {
+		poly p;
+		std::cin>>p.exp>>p.coe;
+		p_1.push_back(p);
+	}
+	std::cin>>l_2;
+	for(int j = 0;j<l_2;++j) {
+		poly p;
+		std::cin>>p.exp>>p.coe;
+		p_2.push_back(p);
+	}
+	//计算
+	int k1 = 0;
+	int k2 = 0;
+	while(true) {		
+		if(p_1[k1].exp >p_2[k2].exp) {
+			k1++;
+		} else if (p_1[k1].exp<p_2[k2].exp) {
+			p_1.insert(p_1.begin()+k1,p_2[k2]);
+			k1++;
+			k2++;
 
-	}
-	cin >> k2;
-	for (int i = k1; i < k2+k1;++i)
-	{
-		cin >> a1[i] >> n1[i];
-		
-
-	}
-	int v = k1 + k2;
-	//排序。这就很乱了，总之是乱排，执行时间和内存都很高？联系一下经典的排序：插入、查找、冒泡等吧，写这个之前对他们并不了解。
-	for (int i = 0; i < k1 + k2; ++i)
-	{
-		for (int j = i+1; j < k1 + k2; ++j)
-			if (a1[i] < a1[j])
-			{
-				swap(a1[i], a1[j]);
-				swap(n1[i], n1[j]);
+		} else if(p_1[k1].exp == p_2[k2].exp) {
+			double v = p_1[k1].coe + p_2[k2].coe;
+			if(v==0) {
+				p_1.erase(p_1.begin()+k1);
+				k1--;
+			} else {
+				p_1[k1].coe = v;
 			}
-			else if (a1[i] == a1[j])
-			{
-		            n1[i] = n1[i] + n1[j];
-					a1[j] = -2000-i;
-					--v;
-				
-			}
-	}
-	//删去为零的项，无语了···
-	int m = 0;
-	for (int i = 0; i < v; ++i)
-	{
-		if (n1[i] == 0)
-		{
-			m++;
-			for (int j = i; j < v; ++j)
-			{
-				n1[j] = n1[j + 1];
-				a1[j] = a1[j + 1];
-			}
+			k1++;
+			k2++;
 		}
-	}
-	
-	//格式化输入 cout是很方便，但是在这里怎么用啊？
-	cout << v-m;
-	for (int i = 0; i < v-m; ++i)
-	{
-
-		printf(" %.0f %.1f", a1[i], n1[i]);
-	}
-	while (cin.get() != '0');//黑框框别跑太快。
-	
-	
-    return 0;
+		if(k2 >= p_2.size()) {
+			break;
+		} else if(k1 >= p_1.size()) {
+			p_1.insert(p_1.end(),p_2.begin()+k2,p_2.end());
+			break;
+		}
+	}	
+	std::cout<<p_1.size();
+	for(auto& X:p_1) {
+		printf(" %d %.1f",X.exp,X.coe);
+	}	
 }
 
