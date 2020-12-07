@@ -3,6 +3,12 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
+/*
+这个明显是把问题复杂化了，
+以下重要性依次排序。
+1. 读懂题意，不要想当然
+2. 看懂测试例子，结合题意，明白后续逻辑
+**/
 struct person
 {
     string id;

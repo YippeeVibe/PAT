@@ -1,6 +1,12 @@
 #include<iostream>
 #include<vector>
 #include<string>
+/*
+- 对于单个字符，-‘0’，可以直接得到一个数字（仅限0-9）。
+- 使用std::stoi(const std::string)转换成一个int型，同理 std::stod,转换为double型
+- 使用std::strtoi(const char*),转换一个基本字符串为int型。
+
+*/
 int main()
 {
 	std::string input;
